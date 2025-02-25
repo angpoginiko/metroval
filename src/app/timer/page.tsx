@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Howl } from "howler";
 import Link from "next/link";
 
-export default function TimerPage() {
+function TimerComponent() {
   const searchParams = useSearchParams();
   const warmupTime = Number(searchParams.get("warmup")) || 300;
   const workTime = Number(searchParams.get("work")) || 30;
@@ -126,5 +126,15 @@ export default function TimerPage() {
         </Link>
       </div>
     </div>
+  );
+}
+
+
+
+export default function TimerPage() {
+  return (
+    <Suspense fallback={<div className="text-white">Loading...</div>}>
+      <TimerComponent />
+    </Suspense>
   );
 }
